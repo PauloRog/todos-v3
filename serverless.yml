@@ -48,6 +48,18 @@ functions:
         - dynamodb:Query
         - dynamodb:PutItem
       Resource: "arn:aws:dynamodb:${self.provider.region}:*:table/todos"
+  listTodo:
+    handler: src/functions/listTodo.handle
+    events: 
+      - http: 
+          path: /todos/{userid}
+          method: GET
+          cors: true
+    iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource: "arn:aws:dynamodb:${self.provider.region}:*:table/todos"
 
 resources:
   Resources:
